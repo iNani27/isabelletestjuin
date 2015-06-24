@@ -14,15 +14,15 @@
 }
 
 #milieu{
-	border: 1px solid aqua;
-	padding:2em;	
-	min-width:300px;
+    border: 1px solid aqua;
+    padding:2em;	
+    min-width:300px;
 }
 #haut{
 
-	min-width:300px;
-	border: 1px solid lightgreen;
-	padding: 0 1em 1em 3em;
+    min-width:300px;
+    border: 1px solid lightgreen;
+    padding: 0 1em 1em 3em;
 }
 
 /* Formulaire de connexion Espace Client*/

@@ -87,6 +87,8 @@ if(isset($_GET['delete'])&& ctype_digit($_GET['delete'])){
     // puis suppression dans la table photo
     $sql3="DELETE FROM photo WHERE id = $idphoto AND utilisateur_id = $idutil;";
     mysqli_query($mysqli,$sql3);
+    
+    /* ? le nom du fichier s'écrit en haut de la page, si on supprime la ligne suivante, ce sont les unlink qui ne trouvent plus le nom de l'image ?*/
     echo $dossier_ori.$nom_photo['lenom'].".".$nom_photo['lextention'];
     
     // supression physique des fichiers
