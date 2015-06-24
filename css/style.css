@@ -8,6 +8,23 @@
     padding:10px;
 }
 
+/*IMAGES */
+.miniatures{
+    border:1px dotted black;margin: 5px;width: 150px;display:inline-block;word-wrap:break-word;vertical-align:top;padding: 20px;
+}
+
+#milieu{
+	border: 1px solid aqua;
+	padding:2em;	
+	min-width:300px;
+}
+#haut{
+
+	min-width:300px;
+	border: 1px solid lightgreen;
+	padding: 0 1em 1em 3em;
+}
+
 /* Formulaire de connexion Espace Client*/
 #connect p{
     text-align:center;

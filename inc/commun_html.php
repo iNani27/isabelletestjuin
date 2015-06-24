@@ -8,6 +8,7 @@ TI juin
         <meta charset="UTF-8">
         <title>Telepro-photos.fr <?= $htmltitle; ?></title>
         <link rel="stylesheet" href="css/style.css" />
+        <script src="js/monjs.js"></script>
     </head>
     <body>
         <div id="main">
