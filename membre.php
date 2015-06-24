@@ -77,7 +77,7 @@ if(isset($_GET['delete'])&& ctype_digit($_GET['delete'])){
     $idutil = $_SESSION['id'];
     
     // récupération du nom de la photo
-    $sql1="SELECT lenom, letype FROM photo WHERE id=$idphoto;";
+    $sql1="SELECT lenom, lextention FROM photo WHERE id=$idphoto;";
     $nom_photo = mysqli_fetch_assoc(mysqli_query($mysqli,$sql1));
     
     // supression dans la table photo_has_rubriques (sans l'utilisation de la clef étrangère)
