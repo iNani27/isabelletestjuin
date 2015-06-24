@@ -7,8 +7,8 @@ include_once 'inc/nav_db.php';
  * if page
  */
 /* Dynamic content */
-$htmltitle="";
-$htmlh1="Bienvenue sur ";
+$htmltitle="- Nous contacter";
+$htmlh1="Bienvenue sur la page de contact de ";
 
 include_once 'inc/commun_html.php';
 ?>       
@@ -16,6 +16,5 @@ include_once 'inc/commun_html.php';
         /* specific CODE */
         ?>
         
-<?php
-include_once 'inc/footer.php';
-?>
+    </body>
+</html>
