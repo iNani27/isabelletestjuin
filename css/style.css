@@ -1,3 +1,70 @@
+/* GENERAL */
+#main{
+    width:80%;
+    height:auto;
+    margin:0 auto;
+    border:1px dotted lightsteelblue;
+    border-radius: 0 15px 15px 0;
+    padding:10px;
+}
+
+/* Formulaire de connexion Espace Client*/
+#connect p{
+    text-align:center;
+}
+
+/* FORMULAIRE et bouton de connexion */
+p.adminmedia{
+    text-align:center;
+}
+button.adminmedia {
+    margin: auto;
+    font-family: "Courier New",Courier,monospace;
+    font-size: 1em;
+    color: #4682B4;
+    padding: .7em;
+    border: 1px solid #B0C4DE;
+    border-radius: 1em;	
+
+
+}
+button.adminmedia:hover{
+    background-color:LightSlateGray;
+    color:LightCyan;
+    border:1px LightSlateGray solid;
+}
+
+input{
+    font-family: 'Cuprum', sans-serif;
+    font-size:16px;	
+    color:SteelBlue;
+}
+
+/* bouton centré */
+input[type="submit"]{
+    clear:both;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    font-family:"Courier New", Courier, monospace;
+    font-size:1em;
+    padding:7px 20px;
+    border:1px LightSteelBlue solid;
+    border-radius:5px;
+}
+input[type="submit"]:hover{
+    border:1px LightSlateGray solid;
+    background-color:LightSlateGray;
+    color:LightCyan;
+}
+#connexion input{
+    display:block;
+    margin:1em auto;
+    padding:.7em;
+    border:1px LightSteelBlue solid;
+    border-radius:1em;
+}
+
 /* Menu horizontal */
 nav{
     border:none;
@@ -22,7 +89,7 @@ nav li{
     float:left;
     margin:0;
     padding:0;
-    width: 16.6666666667%;
+    width: 20%; /*16.6666666667%;*/
 }
 
 nav li a, nav li.rubr{
@@ -46,7 +113,7 @@ nav li a, nav li.rubr{
 #lidroite{
     float:left;
     padding:0px;
-    width: 16.6666666677%;
+    width: 20%; /*16.6666666677%;*/
     background-image:url(../img/bg2.jpg);
     background-repeat:repeat-x;
     background-position:top;
@@ -69,7 +136,7 @@ nav li ul{
     margin:0px;
     border:0px;
     position:absolute;
-    width:225px;
+    width:205px;
     z-index:200;
 }
 
@@ -83,7 +150,7 @@ nav li li {
     float:none;
     margin:0px;
     padding:0px;
-    width:225px;
+    width:205px;
 }
 
 nav li:hover li a{
