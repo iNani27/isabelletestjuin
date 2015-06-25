@@ -3,3 +3,13 @@ SELECT  u.id, u.lemail, u.lenom,
 	FROM utilisateur u
 		INNER JOIN droit d ON u.droit_id = d.id
     WHERE u.lelogin='admin' AND u.lepass = 'admin';
+    
+SELECT u.lenom, p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
+    FROM photo p
+    LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
+    LEFT JOIN rubriques r ON h.rubriques_id = r.id
+    INNER JOIN utilisateur u 
+        GROUP BY p.id
+        ORDER BY p.id DESC
+        
+        ;

@@ -29,3 +29,10 @@ $mini_qualite = 70;
 
 // formats acceptés en minuscule dans un tableau, séparé par des ','
 $formats_acceptes = array('jpg','jpeg','png');
+
+// Variable affichage par page
+$elements_par_page = 20;
+// nom de la var GET de pagination
+$get_pagination = "pg";
+// pagination dans l'admin
+$elements_par_page_admin = 6;

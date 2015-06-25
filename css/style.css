@@ -7,7 +7,24 @@
     border-radius: 0 15px 15px 0;
     padding:10px;
 }
-
+.center{
+    text-align:center;
+    margin:10px;
+    
+}
+/* Liens connecté */
+p a.right, h4 a.right{
+    display:block;
+    float:right;
+    padding: 10px;
+    border:1px solid lightsteelblue;
+    border-radius: 5px;
+    margin:2px;
+    background-color:LightGray;
+}
+p a.right:hover, h4 a.right:hover{
+    background-color:LightSlateGray;
+}
 /*IMAGES */
 .miniatures{
     border:1px dotted black;margin: 5px;width: 150px;display:inline-block;word-wrap:break-word;vertical-align:top;padding: 20px;
@@ -47,8 +64,10 @@ button.adminmedia {
 }
 button.adminmedia:hover{
     background-color:LightSlateGray;
-    color:LightCyan;
+    /*color:LightCyan;*/
     border:1px LightSlateGray solid;
+    color:SteelBlue;
+
 }
 
 input{
