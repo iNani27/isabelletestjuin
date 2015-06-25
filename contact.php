@@ -13,10 +13,10 @@
         // ENVOYER le mail
         mail($mailwebdvlpr,$titre,$texte,$entete);
 		// Confirmation
-		$affiche = '<h3>Votre message nous est transmit, merci</h3>';
-		
+		$affiche = '<h3>Votre message nous est transmit, merci</h3>';	
     }
-include_once 'inc/nav_db.php';
+include_once 'inc/nav_db.php'; 
+
 
 /* specific CODE */
 /* Diff 
