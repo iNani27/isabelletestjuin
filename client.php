@@ -77,8 +77,7 @@ include_once 'inc/commun_html.php';
     } else {
 
         // texte d'accueil
-        echo "<h2>Bonjour " . $_SESSION['lenom'] . '</h2>';
-        echo "<p>Vous êtes connecté en tant que <span title='" . $_SESSION['lenom'] . "'>" . $_SESSION['nom_perm'] . "</span></p>";
+        echo "<h3>Bienvenue " . $_SESSION['lenom'] . ". Vous êtes connecté en tant que <span title='" . $_SESSION['lenom'] . "'>" . $_SESSION['nom_perm'] . "</span> sur votre espace client</h3>";
         echo "<h4><a href='deconnect.php'>Déconnexion</a></h4>";
 
         // liens  suivant la permission utilisateur
@@ -95,11 +94,11 @@ include_once 'inc/commun_html.php';
             default :
                 echo "<a href='membre.php'>Espace membre</a>";
         }
-    }
-    ?>
-</div>
-<div id="milieu">
-                <?php
+    
+
+echo "</div>
+<div id='milieu'>";
+                
                 // affichez les miniatures de chaques photos dans la db par id Desc, avec le titre au dessus et la description en dessous, et affichage de la grande photo dans une nouvelle fenêtre lors du clic, Bonus : afficher lelogin de l'auteur de l'image
                while($ligne = mysqli_fetch_assoc($recup_sql)){
                  echo "<div class='miniatures'>";
@@ -113,7 +112,8 @@ include_once 'inc/commun_html.php';
                  }
                  echo "<p>".$ligne['ladedsc']."<br /> par <strong>".$ligne['lelogin']."</strong></p>";
                  echo "</div>";
-               }                
+               }  
+               }
                ?> 
             </div>
 <?php
