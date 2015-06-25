@@ -69,13 +69,13 @@ include_once 'inc/commun_html.php';
 /* specific CODE */
 /* Affiche all img */
 ?>
- <div class="center">
-        <nav>
-            <?php
-            echo pagination($nb_total, $pg_actu, $elements_par_page, $get_pagination)
-            ?>
-        </nav>
-    </div>
+<div class="center">
+    <nav>
+        <?php
+        echo pagination($nb_total, $pg_actu, $elements_par_page, $get_pagination)
+        ?>
+    </nav>
+</div>
 <div id="lesphotos">
     <?php
     while ($ligne = mysqli_fetch_assoc($recup_sql)) {
@@ -95,7 +95,7 @@ include_once 'inc/commun_html.php';
     }
     ?>
 
-   
+
     <?php
     include_once 'inc/footer.php';
     ?>
