@@ -16,8 +16,6 @@
 		$affiche = '<h3>Votre message nous est transmit, merci</h3>';	
     }
 include_once 'inc/nav_db.php'; 
-
-
 /* specific CODE */
 /* Diff 
  * if connected 
