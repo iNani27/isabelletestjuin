@@ -4,8 +4,32 @@ require_once 'fonctions.php';
 require_once 'fct_pagination.php';
 include_once 'inc/nav_db.php';
 
+ /* NAVIGATION */
+// on va compter le nombre de lignes de résultat pour la pagination, le COUNT ne renvoie q'une ligne de résultat
+$recup_nb_photo = "SELECT COUNT(*) AS nb FROM photo;";
+// requete de récupération
+$tot = mysqli_query($mysqli, $recup_nb_photo);
+// transformation du résultat en tableau associatif
+$maligne = mysqli_fetch_assoc($tot);
+// variable contenant le nombre total de proverbes
+$nb_total = $maligne['nb'];
 
+// Vérification de la variable GET de la pagination
+if (isset($_GET[$get_pagination])) {
+    //Si la var est un entier positif
+    if (ctype_digit($_GET[$get_pagination])) {
+        // on récupère la valeur de la var ssi elle est numeric +
+        $pg_actu = $_GET[$get_pagination];
+    } else {
+        $pg_actu = 1; // par défaut aller en page 1
+    }
+} else {
+    $pg_actu = 1;
+}
 
+// Création de la varible $debut utilisée dans le LIMIT
+$debut = (($pg_actu - 1) * $elements_par_page);
+/* FIN NAVIGATION */
 /* specific CODE */
 /* Diff 
  * if connected 
@@ -28,7 +52,7 @@ $sqlall = "SELECT p.*,u.id, u.lenom AS auteur
         
         GROUP BY p.id
         ORDER BY p.id DESC
-        LIMIT 20;";
+        LIMIT $debut,$elements_par_page";
 $recup_sql = mysqli_query($mysqli, $sqlall) or die(mysqli_error($mysqli));
 
 // récupération de toutes les rubriques pour le formulaire d'insertion
@@ -44,9 +68,15 @@ include_once 'inc/commun_html.php';
 ?>       
 <?php
 /* specific CODE */
-/* Affiche all img - 20 dernières */
+/* Affiche all img */
 ?>
-
+<div class="center">
+    <nav>
+        <?php
+        echo pagination($nb_total, $pg_actu, $elements_par_page, $get_pagination)
+        ?>
+    </nav>
+</div>
 <div id="lesphotos">
     <?php
     while ($ligne = mysqli_fetch_assoc($recup_sql)) {
