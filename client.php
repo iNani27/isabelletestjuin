@@ -33,8 +33,8 @@ if (isset($_POST['lelogin'])) {
         $_SESSION['lelogin'] = $lelogin; // récupération du login (du POST après traitement)
         // var_dump($_SESSION);
         // redirection vers la page d'accueil (pour éviter les doubles connexions par F5)
-        /* header('location: ' . CHEMIN_RACINE . 'client.php'); */
-        header('location: ' . CHEMIN_RACINE);
+        header('location: ' . CHEMIN_RACINE . 'client.php'); 
+       
     }
 }
 
@@ -149,23 +149,24 @@ $debut = (($pg_actu - 1) * $elements_par_page);
 
 
 // récupérations des images de l'utilisateur connecté dans la table photo avec leurs sections même si il n'y a pas de sections sélectionnées (jointure externe avec LEFT)
-$sqlall = "SELECT p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
+$sqlprofil = "SELECT u.id,p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
     FROM photo p
+    INNER JOIN utilisateur u ON u.id = p.utilisateur_id
 	LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
     LEFT JOIN rubriques r ON h.rubriques_id = r.id
-        WHERE p.utilisateur_id = ".$_SESSION['id']."
+        
         GROUP BY p.id
         ORDER BY p.id DESC
         LIMIT $debut,$elements_par_page";
 
-$recup_sql = mysqli_query($mysqli, $sqlall) or die(mysqli_error($mysqli));
+$recup_sql = mysqli_query($mysqli, $sqlprofil) or die(mysqli_error($mysqli));
 
 
 // récupération de toutes les rubriques pour le formulaire d'insertion
 $sqlrub = "SELECT * FROM rubriques ORDER BY lintitule ASC;";
 $recup_section = mysqli_query($mysqli, $sqlrub);
 
-
+$limit_pagi= "LIMIT $debut,$elements_par_page";
 
 /* Dynamic content */
 $htmltitle = "- Espace Membre";
