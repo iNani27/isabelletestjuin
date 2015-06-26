@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 TI juin
-20150624 INani@CF2m
+20150624-26 INani@CF2m
 -->
 <html>
     <head>
@@ -20,11 +20,10 @@ TI juin
                 <ul>
                     <?php
                     while($ligne = mysqli_fetch_assoc($req_nav)){
-                    echo "<li><a href='".$ligne['id']."'>".$ligne['lintitule']."</a></li>";
+                    echo "<li><a href='rubriques?rub=".$ligne['id']."'>".$ligne['lintitule']."</a></li>";
                     }
                     ?>
                 </ul>
-                
                 </li>
                 <li><a href="contact.php">Nous contacter</a></li>
                 <li><a href="client.php">Espace Client</a></li>
