@@ -43,4 +43,3 @@ include_once 'inc/commun_html.php';
 
     <?php
     include_once 'inc/footer.php';
-    ?>
