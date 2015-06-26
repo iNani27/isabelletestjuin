@@ -47,5 +47,3 @@ function pagination($total, $page_actu = 1, $par_pg = 5, $var_get = "pg") {
     }
     return $total;
 }
-
-?>

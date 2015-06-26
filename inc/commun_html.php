@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 TI juin
-20150624-26 INani@CF2m
+20150624-26 INani@CF2m 
 -->
 <html>
     <head>
