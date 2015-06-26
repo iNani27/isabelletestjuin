@@ -4,7 +4,6 @@ require_once 'fonctions.php';
 require_once 'fct_pagination.php';
 include_once 'inc/nav_db.php';
 
-
 // si tentative de connexion
 if (isset($_POST['lelogin'])) {
     $lelogin = traite_chaine($_POST['lelogin']);
@@ -29,7 +28,6 @@ if (isset($_POST['lelogin'])) {
         // redirection vers la page d'accueil (pour éviter les doubles connexions par F5)
         header('location: ' . CHEMIN_RACINE . 'client.php');
         
-
     }
     else {
         /*$erreur="Ces identifiants n'existent pas";*/
@@ -37,8 +35,6 @@ if (isset($_POST['lelogin'])) {
     }
     
 }
-
-
 
 // si on a envoyé le formulaire et qu'un fichier est bien attaché
 if (isset($_POST['letitre']) && isset($_FILES['lefichier'])) {
