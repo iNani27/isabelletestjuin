@@ -33,7 +33,7 @@ if (isset($_POST['lelogin'])) {
         $_SESSION['lelogin'] = $lelogin; // récupération du login (du POST après traitement)
         // var_dump($_SESSION);
         // redirection vers la page d'accueil (pour éviter les doubles connexions par F5)
-        header('location: ' . CHEMIN_RACINE . 'modere.php'); 
+        header('location: ' . CHEMIN_RACINE . 'admin.php'); 
        
     }
 }
@@ -70,7 +70,7 @@ $debut = (($pg_actu - 1) * $elements_par_page);
 
 
 // récupérations des images de tous modif only
-$sqlallmod = "SELECT u.id,p.*,u.lenom AS auteur, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
+$sqlall = "SELECT u.id,p.*,u.lenom AS auteur, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
     FROM photo p
     INNER JOIN utilisateur u ON u.id = p.utilisateur_id
 	LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
@@ -80,7 +80,7 @@ $sqlallmod = "SELECT u.id,p.*,u.lenom AS auteur, GROUP_CONCAT(r.id) AS idrub, GR
         ORDER BY p.id DESC
         LIMIT $debut,$elements_par_page";
 
-$recup_sql = mysqli_query($mysqli, $sqlallmod) or die(mysqli_error($mysqli));
+$recup_sql = mysqli_query($mysqli, $sqlall) or die(mysqli_error($mysqli));
 
 
 // récupération de toutes les rubriques pour le formulaire d'insertion
@@ -90,7 +90,7 @@ $recup_section = mysqli_query($mysqli, $sqlrub);
 $limit_pagi= "LIMIT $debut,$elements_par_page";
 
 /* Dynamic content */
-$htmltitle = "- Espace Modération";
+$htmltitle = "- Espace Administration";
 $htmlh1 = "Espace membre de ";
 
 include_once 'inc/commun_html.php';
@@ -115,7 +115,7 @@ include_once 'inc/commun_html.php';
     } else {
 
         // texte d'accueil
-        echo "<h3>Bienvenue " . $_SESSION['lenom'] . ". Vous êtes connecté en tant que <span title='" . $_SESSION['lenom'] . "'>" . $_SESSION['nom_perm'] . "</span> sur votre espace client</h3>";
+        echo "<h3>Bienvenue " . $_SESSION['lenom'] . ". Vous êtes connecté en tant que <span title='" . $_SESSION['lenom'] . "'>" . $_SESSION['nom_perm'] . "</span> sur votre espace administrateur</h3>";
         echo "<h4><a class='right' href='deconnect.php'>Déconnexion</a></h4>";
 
         // liens  suivant la permission utilisateur
@@ -162,6 +162,7 @@ include_once 'inc/commun_html.php';
                     }
                     echo "<span>par " . $ligne['auteur'] . "</span>"; 
                     echo"<br/><a href='modif.php?id=" . $ligne['id'] . "'><img src='img/modifier.png' alt='modifier' /></a> 
+                        <img onclick='supprime(" . $ligne['id'] . ");' src='img/supprimer.png' alt='supprimer' />
                      </p>";
                     echo "</div>";
                 }
