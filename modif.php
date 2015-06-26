@@ -12,7 +12,7 @@ if (!isset($_SESSION['sid']) || $_SESSION['sid'] != session_id()) {
 if(isset($_GET['id'])&&  ctype_digit($_GET['id'])){
     $idphoto = $_GET['id'];
 }else{
-   header("location: client.php");
+   header("location: ./");
 }
 
 // si on a envoyé le formulaire et qu'un fichier est bien attaché
@@ -110,7 +110,7 @@ include_once 'inc/commun_html.php';
                         }else{
                             $coche = "";
                         }
-                        echo $ligne['lintitule']." : <input type='checkbox' name='section[]' value='".$ligne['id']."' $coche > - ";
+                        echo $ligne['lintitule']." : <input type='checkbox' name='section[]' value='".$ligne['id']."' $coche > | ";
                     }
                                   echo "<br/><img src='".CHEMIN_RACINE.$dossier_mini.$recup_photo['lenom'].".jpg' alt='' />";
                     ?>

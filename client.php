@@ -10,6 +10,10 @@ include_once 'inc/nav_db.php';
  * if page
  */
 
+// si on est pas (ou plus) connecté
+/*if (!isset($_SESSION['sid']) || $_SESSION['sid'] != session_id()) {
+    header("location: deconnect.php");
+}*/
 
 // si tentative de connexion
 if (isset($_POST['lelogin'])) {
@@ -17,7 +21,7 @@ if (isset($_POST['lelogin'])) {
     $lemdp = traite_chaine($_POST['lemdp']);
 
     // vérification de l'utilisateur dans la db
-    $sql = "SELECT  u.id, u.lemail, u.lenom, 
+    $sql = "SELECT  u.id, u.lemail, u.lenom,
 		d.lenom AS nom_perm, d.laperm 
 	FROM utilisateur u
 		INNER JOIN droit d ON u.droit_id = d.id 
@@ -34,8 +38,17 @@ if (isset($_POST['lelogin'])) {
         // var_dump($_SESSION);
         // redirection vers la page d'accueil (pour éviter les doubles connexions par F5)
         header('location: ' . CHEMIN_RACINE . 'client.php');
+        
+
     }
+    else {
+        /*$erreur="Ces identifiants n'existent pas";*/
+        echo "Ces identifiants n'existent pas";
+    }
+    
 }
+
+
 
 // si on a envoyé le formulaire et qu'un fichier est bien attaché
 if (isset($_POST['letitre']) && isset($_FILES['lefichier'])) {
@@ -110,7 +123,7 @@ if (isset($_GET['delete']) && ctype_digit($_GET['delete'])) {
     mysqli_query($mysqli, $sql3);
 
     /* ISA ::: ? le nom du fichier s'écrit en haut de la page, si on supprime la ligne suivante, ce sont les unlink qui ne trouvent plus le nom de l'image ? */
-    echo $dossier_ori . $nom_photo['lenom'] . "." . $nom_photo['lextention'];
+    $dossier_ori . $nom_photo['lenom'] . "." . $nom_photo['lextention'];
 
     // supression physique des fichiers
     unlink($dossier_ori . $nom_photo['lenom'] . "." . $nom_photo['lextention']);
@@ -148,21 +161,7 @@ $debut = (($pg_actu - 1) * $elements_par_page);
 
 
 
-/* ISA trouver comment récupérer les img UNIQ de l'UTILISATEUR connecté !! */
 
-
-// récupérations des images de l'utilisateur connecté dans la table photo avec leurs sections même si il n'y a pas de sections sélectionnées (jointure externe avec LEFT)
-$sqlprofil = "SELECT p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
-    FROM photo p
-    INNER JOIN utilisateur u ON u.id = p.utilisateur_id
-	LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
-    LEFT JOIN rubriques r ON h.rubriques_id = r.id
-        
-        GROUP BY p.id
-        ORDER BY p.id DESC
-        LIMIT $debut,$elements_par_page";
-
-$recup_sql = mysqli_query($mysqli, $sqlprofil) or die(mysqli_error($mysqli));
 
 
 // récupération de toutes les rubriques pour le formulaire d'insertion
@@ -179,6 +178,7 @@ include_once 'inc/commun_html.php';
 ?>
 <div id="connect">
     <?php
+    
 // si on est pas (ou plus) connecté
     if (!isset($_SESSION['sid']) || $_SESSION['sid'] != session_id()) {
         ?>
@@ -187,19 +187,41 @@ include_once 'inc/commun_html.php';
             <input type="password" name="lemdp" required />
             <input type="submit" value="Connexion" />
         </form>
-
+       
         <p>
             <a href="mdp.php">Mot de passe oublié?</a> | 
             <a href="inscription.php">Inscription</a>
         </p>
         <?php
+      
+      
+     
         // sinon on est connecté
     } else {
+        /* Si connecté  */
+
+// récupérations des images de l'utilisateur connecté dans la table photo avec leurs sections même si il n'y a pas de sections sélectionnées (jointure externe avec LEFT)
+$sqlprofil = "SELECT p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
+    FROM photo p
+    INNER JOIN utilisateur u ON u.id = p.utilisateur_id
+    LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
+    LEFT JOIN rubriques r ON h.rubriques_id = r.id
+        WHERE p.utilisateur_id = ".$_SESSION['id']."
+        GROUP BY p.id
+        ORDER BY p.id DESC
+        LIMIT $debut,$elements_par_page";
+
+/* LIMIT $debut,$elements_par_page 
+WHERE p.utilisateur_id = ".$_SESSION['id']."
+ *  */
+
+$recup_sql = mysqli_query($mysqli, $sqlprofil) or die(mysqli_error($mysqli));
+
 
         // texte d'accueil
         echo "<h3>Bienvenue " . $_SESSION['lenom'] . ". Vous êtes connecté en tant que <span title='" . $_SESSION['lenom'] . "'>" . $_SESSION['nom_perm'] . "</span> sur votre espace client</h3>";
         echo "<h4><a class='right' href='deconnect.php'>Déconnexion</a></h4>";
-
+        
         // liens  suivant la permission utilisateur
         switch ($_SESSION['laperm']) {
             // si on est l'admin
