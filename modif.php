@@ -43,14 +43,15 @@ if(isset($_POST['letitre'])){
 
 
 // récupérations des images de l'utilisateur connecté dans la table photo avec leurs sections même si il n'y a pas de sections sélectionnées (jointure externe avec LEFT)
-$sql = "SELECT p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
+$sql = "SELECT p.*,u.lenom AS auteur, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
     FROM photo p
+    INNER JOIN utilisateur u 
 	LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
     LEFT JOIN rubriques r ON h.rubriques_id = r.id
-        WHERE p.utilisateur_id = ".$_SESSION['id']." 
-            AND p.id = $idphoto
+        WHERE p.id = $idphoto
         GROUP BY p.id
-        ORDER BY p.id DESC;
+        ORDER BY p.id DESC
+        ;
     ";
 $recup_sql = mysqli_query($mysqli,$sql) or die(mysqli_error($mysqli));
 
@@ -61,14 +62,14 @@ $sql="SELECT * FROM rubriques ORDER BY lintitule ASC;";
 $recup_section = mysqli_query($mysqli, $sql);
 
 /* Dynamic content */
-$htmltitle = "- Espace Membre";
+$htmltitle = "- Espace Client";
 $htmlh1 = "Espace membre de ";
 
 include_once 'inc/commun_html.php';
 ?>
 
                 <div id="connect"><?php // texte d'accueil
-                        echo "<h3>Bienvenue " . $_SESSION['lenom'] . ". Vous êtes connecté en tant que <span title='" . $_SESSION['lenom'] . "'>" . $_SESSION['nom_perm'] . "</span> sur votre espace client</h3>";
+                        echo "<h3>Bienvenue " . $_SESSION['lenom'] . ". Vous êtes connecté en tant que <span title='" . $_SESSION['lenom'] . "'>" . $_SESSION['nom_perm'] . "</span> sur votre espace de modification</h3>";
         echo "<h4><a class='right' href='deconnect.php'>Déconnexion</a></h4>";
                         
                         // liens  suivant la permission utilisateur
@@ -93,7 +94,7 @@ include_once 'inc/commun_html.php';
                 <form action="" method="POST" name="onposte">
                     <input type="text" name="letitre" value="<?php echo $recup_photo['letitre'] ?>" required /><br/>
  
-                    <textarea name="ladesc"><?php echo $recup_photo['ladesc'] ?></textarea><br/>
+                    <textarea name="ladesc"><?php echo $recup_photo['ladedsc'] ?></textarea><br/>
                     
                     <input type="submit" value="Modifier" /><br/>
                     Sections : <?php
@@ -111,7 +112,7 @@ include_once 'inc/commun_html.php';
                         }
                         echo $ligne['lintitule']." : <input type='checkbox' name='section[]' value='".$ligne['id']."' $coche > - ";
                     }
-                    echo "<br/><img src='".CHEMIN_RACINE.$dossier_mini.$recup_photo['lenom'].".jpg' alt='' />";
+                                  echo "<br/><img src='".CHEMIN_RACINE.$dossier_mini.$recup_photo['lenom'].".jpg' alt='' />";
                     ?>
                 </form>
             </div>
