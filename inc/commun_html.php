@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 TI juin
-20150624 INani@CF2m
+20150626 INani@CF2m
 -->
 <html>
     <head>
@@ -24,7 +24,6 @@ TI juin
                     }
                     ?>
                 </ul>
-                
                 </li>
                 <li><a href="contact.php">Nous contacter</a></li>
                 <li><a href="client.php">Espace Client</a></li>

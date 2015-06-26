@@ -10,6 +10,8 @@ include_once 'inc/nav_db.php';
  * if page
  */
 
+
+
 if (isset($_GET['rub'])) {
     /* NAVIGATION */
 // on va compter le nombre de lignes de résultat pour la pagination, le COUNT ne renvoie q'une ligne de résultat

@@ -5,20 +5,6 @@ require_once 'fct_pagination.php';
 include_once 'inc/nav_db.php';
 
 
-
-/* specific CODE */
-/* Diff 
- * if connected 
- * if page
- */
-
-// si on est pas (ou plus) connecté
-/* if (!isset($_SESSION['sid']) || $_SESSION['sid'] != session_id()) {
-  /*header("location: deconnect.php"); */
-/* header("location: index.php"); */
-/* } */
-
-
 /* Affiche all img */
 // récupérations des images de l'utilisateur connecté dans la table photo avec leurs sections même si il n'y a pas de sections sélectionnées (jointure externe avec LEFT)
 $sqlall = "SELECT p.*,u.id, u.lenom AS auteur
@@ -31,10 +17,7 @@ $sqlall = "SELECT p.*,u.id, u.lenom AS auteur
         LIMIT 20;";
 $recup_sql = mysqli_query($mysqli, $sqlall) or die(mysqli_error($mysqli));
 
-// récupération de toutes les rubriques pour le formulaire d'insertion
-/*
-  $sqlrub = "SELECT * FROM rubriques ORDER BY lintitule ASC;";
-  $recup_section = mysqli_query($mysqli, $sqlrub);
+
 
   /* Dynamic content */
 $htmltitle = "";

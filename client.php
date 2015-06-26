@@ -4,16 +4,6 @@ require_once 'fonctions.php';
 require_once 'fct_pagination.php';
 include_once 'inc/nav_db.php';
 
-/* specific CODE */
-/* Diff 
- * if connected 
- * if page
- */
-
-// si on est pas (ou plus) connecté
-/*if (!isset($_SESSION['sid']) || $_SESSION['sid'] != session_id()) {
-    header("location: deconnect.php");
-}*/
 
 // si tentative de connexion
 if (isset($_POST['lelogin'])) {
