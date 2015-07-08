@@ -14,9 +14,12 @@ include_once 'inc/nav_db.php';
 if (isset($_GET['rub'])) {
     /* NAVIGATION */
 // on va compter le nombre de lignes de résultat pour la pagination, le COUNT ne renvoie q'une ligne de résultat
+    // !!! correction req à corriger !!! rem: no need Join on rubriques, only on photo_has_rubriques enj INNER!
+    //cf probleme-juin
+    
     $recup_nb_photo = "SELECT COUNT(*) AS nb FROM photo p
 	LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
-	LEFT JOIN rubriques r ON h.rubriques_id = r.id
+	LEFT JOIN rubriques r ON h.rubriques_id = r.id 
     WHERE r.id=".$_GET['rub'].";";
 // requete de récupération
     $tot = mysqli_query($mysqli, $recup_nb_photo);

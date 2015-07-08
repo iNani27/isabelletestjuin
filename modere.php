@@ -73,9 +73,8 @@ $debut = (($pg_actu - 1) * $elements_par_page);
 $sqlallmod = "SELECT u.id,p.*,u.lenom AS auteur, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
     FROM photo p
     INNER JOIN utilisateur u ON u.id = p.utilisateur_id
-	LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
+    LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
     LEFT JOIN rubriques r ON h.rubriques_id = r.id
-        
         GROUP BY p.id
         ORDER BY p.id DESC
         LIMIT $debut,$elements_par_page";

@@ -14,6 +14,7 @@ $sqlall = "SELECT p.*,u.id, u.lenom AS auteur
         GROUP BY p.id
         ORDER BY p.id DESC
         LIMIT 20;";
+
 $recup_sql = mysqli_query($mysqli, $sqlall) or die(mysqli_error($mysqli));
 
   /* Dynamic content */

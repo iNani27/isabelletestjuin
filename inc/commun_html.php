@@ -20,7 +20,7 @@ TI juin
                 <ul>
                     <?php
                     while($ligne = mysqli_fetch_assoc($req_nav)){
-                    echo "<li><a href='rubriques?rub=".$ligne['id']."'>".$ligne['lintitule']."</a></li>";
+                    echo "<li><a href='rubriques.php?rub=".$ligne['id']."'>".$ligne['lintitule']."</a></li>";
                     }
                     ?>
                 </ul>
