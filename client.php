@@ -28,6 +28,8 @@ if (isset($_POST['lelogin'])) {
         // redirection vers la page d'accueil (pour éviter les doubles connexions par F5)
         header('location: ' . CHEMIN_RACINE . 'client.php');
         
+        
+        
     }
     else {
         /*$erreur="Ces identifiants n'existent pas";*/
@@ -117,10 +119,11 @@ if (isset($_GET['delete']) && ctype_digit($_GET['delete'])) {
     unlink($dossier_mini . $nom_photo['lenom'] . ".jpg");
 }
 
-
+if(isset($_SESSION['id'])){
 /* NAVIGATION */
 // on va compter le nombre de lignes de résultat pour la pagination, le COUNT ne renvoie q'une ligne de résultat
-$recup_nb_photo = "SELECT COUNT(*) AS nb FROM photo;";
+$recup_nb_photo = "SELECT COUNT(*) AS nb FROM photo p WHERE p.utilisateur_id = ".$_SESSION['id'];
+
 // requete de récupération
 $tot = mysqli_query($mysqli, $recup_nb_photo);
 // transformation du résultat en tableau associatif
@@ -148,6 +151,23 @@ $debut = (($pg_actu - 1) * $elements_par_page);
 
 
 
+// récupérations des images de l'utilisateur connecté dans la table photo avec leurs sections même si il n'y a pas de sections sélectionnées (jointure externe avec LEFT)
+$sqlprofil = "SELECT p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
+    FROM photo p
+    INNER JOIN utilisateur u ON u.id = p.utilisateur_id
+    LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
+    LEFT JOIN rubriques r ON h.rubriques_id = r.id
+        WHERE p.utilisateur_id = ".$_SESSION['id']."
+        GROUP BY p.id
+        ORDER BY p.id DESC
+        LIMIT $debut,$elements_par_page";
+
+/* LIMIT $debut,$elements_par_page 
+WHERE p.utilisateur_id = ".$_SESSION['id']."
+ *  */
+
+$recup_sql = mysqli_query($mysqli, $sqlprofil) or die(mysqli_error($mysqli));
+
 
 
 // récupération de toutes les rubriques pour le formulaire d'insertion
@@ -155,7 +175,7 @@ $sqlrub = "SELECT * FROM rubriques ORDER BY lintitule ASC;";
 $recup_section = mysqli_query($mysqli, $sqlrub);
 
 $limit_pagi = "LIMIT $debut,$elements_par_page";
-
+}
 /* Dynamic content */
 $htmltitle = "- Espace Membre";
 $htmlh1 = "Espace membre de ";
@@ -175,8 +195,8 @@ include_once 'inc/commun_html.php';
         </form>
        
         <p>
-            <a href="mdp.php">Mot de passe oublié?</a> | 
-            <a href="inscription.php">Inscription</a>
+            <a href="#">Mot de passe oublié?</a> | 
+            <a href="#">Inscription</a>
         </p>
         <?php
       
@@ -186,22 +206,7 @@ include_once 'inc/commun_html.php';
     } else {
         /* Si connecté  */
 
-// récupérations des images de l'utilisateur connecté dans la table photo avec leurs sections même si il n'y a pas de sections sélectionnées (jointure externe avec LEFT)
-$sqlprofil = "SELECT p.*, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(r.lintitule SEPARATOR '|||' ) AS lintitule
-    FROM photo p
-    INNER JOIN utilisateur u ON u.id = p.utilisateur_id
-    LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
-    LEFT JOIN rubriques r ON h.rubriques_id = r.id
-        WHERE p.utilisateur_id = ".$_SESSION['id']."
-        GROUP BY p.id
-        ORDER BY p.id DESC
-        LIMIT $debut,$elements_par_page";
 
-/* LIMIT $debut,$elements_par_page 
-WHERE p.utilisateur_id = ".$_SESSION['id']."
- *  */
-
-$recup_sql = mysqli_query($mysqli, $sqlprofil) or die(mysqli_error($mysqli));
 
 
         // texte d'accueil
@@ -270,9 +275,8 @@ $recup_sql = mysqli_query($mysqli, $sqlprofil) or die(mysqli_error($mysqli));
                 }
             }
             ?>
-
         </div><!-- FIN div milieu -->    
     </div><!-- FIN div main -->  
     <?php
     include_once 'inc/footer.php';
-    ?>
+

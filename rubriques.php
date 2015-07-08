@@ -180,4 +180,4 @@ include_once 'inc/commun_html.php';
     </div><!-- FIN div main -->  
 <?php
 include_once 'inc/footer.php';
-?>
+
