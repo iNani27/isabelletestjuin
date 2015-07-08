@@ -15,6 +15,15 @@ if (isset($_GET['id']) && ctype_digit($_GET['id'])) {
     header("location: ./");
 }
 
+    // si on est admin ou modo
+    if($_SESSION['laperm']<2){
+        // on peut modifier toutes les photos
+        $selon_perm="";
+    // sinon on peut supprimer que ses photos
+    }else{
+    $selon_perm = "AND p.utilisateur_id = ".$_SESSION['id'];
+    }
+
 // si on a envoyé le formulaire et qu'un fichier est bien attaché
 if (isset($_POST['letitre'])) {
 
@@ -22,9 +31,10 @@ if (isset($_POST['letitre'])) {
     $letitre = traite_chaine($_POST['letitre']);
     $ladesc = traite_chaine($_POST['ladesc']);
 
-    // mise à jour du titre et du texte
-    mysqli_query($mysqli, "UPDATE photo SET letitre='$letitre', ladedsc='$ladesc' WHERE id = $idphoto");
 
+    // mise à jour du titre et du texte si appartient à l'utilisateur connecté, ou à un admin ou un modo
+    $update=mysqli_query($mysqli, "UPDATE photo p SET p.letitre='$letitre', p.ladedsc='$ladesc' WHERE p.id = $idphoto $selon_perm ;");
+    if($update){
     // supression dans la table photo_has_rubrique (sans l'utilisation de la clef étrangère)
     $sql2 = "DELETE FROM photo_has_rubriques WHERE photo_id = $idphoto";
     mysqli_query($mysqli, $sql2);
@@ -39,6 +49,7 @@ if (isset($_POST['letitre'])) {
         }
     }
     header("Location: client.php");
+    }
 }
 
 
@@ -47,8 +58,9 @@ $sql = "SELECT p.*,u.lenom AS auteur, GROUP_CONCAT(r.id) AS idrub, GROUP_CONCAT(
     FROM photo p
     INNER JOIN utilisateur u 
 	LEFT JOIN photo_has_rubriques h ON h.photo_id = p.id
-    LEFT JOIN rubriques r ON h.rubriques_id = r.id
+        LEFT JOIN rubriques r ON h.rubriques_id = r.id
         WHERE p.id = $idphoto
+            $selon_perm
         GROUP BY p.id
         ORDER BY p.id DESC
         ;
@@ -60,6 +72,10 @@ $recup_photo = mysqli_fetch_assoc($recup_sql);
 // récupération de toutes les rubriques pour le formulaire d'insertion
 $sql = "SELECT * FROM rubriques ORDER BY lintitule ASC;";
 $recup_section = mysqli_query($mysqli, $sql);
+
+
+
+
 
 /* Dynamic content */
 $htmltitle = "- Espace Client";
